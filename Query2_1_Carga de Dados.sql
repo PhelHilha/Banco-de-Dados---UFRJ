@@ -1,4 +1,5 @@
--- Script para carregar dados ( no minimo 5, por tabela )
+-- Script para carregar dados (Versão Final)
+-- Lembre-se de executar o script de CRIAÇÃO das tabelas antes deste.
 
 USE VacinaDB;
 GO
@@ -36,11 +37,11 @@ INSERT INTO Endereco (Numero, ID_Logradouro, ID_Complemento) VALUES
 
 -- PESSOAS
 INSERT INTO Pessoa_Fisica (Nome, Data_Nascimento, RG, ID_Sexo, ID_Estado_Civil, ID_Nacionalidade) VALUES
-('João Silva', '1990-01-01', '1234567', 1, 1, 1),
-('Maria Souza', '1985-05-10', '2345678', 2, 2, 1),
-('Pedro Lima', '1978-07-22', '3456789', 1, 3, 2),
-('Ana Torres', '2000-03-15', '4567890', 2, 4, 3),
-('Carlos Dias', '1995-08-09', '5678901', 1, 5, 1);
+('Enzo Sampaio', '1990-01-01', '1234567', 1, 1, 1),
+('Jeson ChenWen', '1985-05-10', '2345678', 3, 2, 2),
+('Nilce Moretto', '1978-07-22', '3456789', 2, 3, 3),
+('Davi Brito', '2000-03-15', '4567890', 4, 4, 4),
+('Juliette', '1995-08-09', '5678901', 5, 5, 5);
 
 INSERT INTO Pessoa_Juridica (Nome, Contato) VALUES
 -- Unidades de Saúde (IDs 1-5)
@@ -60,7 +61,7 @@ INSERT INTO Genero (Descricao) VALUES
 ('Homem Cis'), ('Mulher Cis'), ('Mulher Trans'), ('Homem Trans'), ('Não Binário');
 
 INSERT INTO Pessoa_Genero (ID_Pessoa_Fisica, ID_Genero) VALUES
-(1,1), (2,2), (3,1), (4,3), (5,5);
+(1,1), (2,3), (3,2), (4,4), (5,5);
 
 -- TELEFONES
 INSERT INTO Telefone (Numero) VALUES
@@ -81,11 +82,10 @@ INSERT INTO Vacinador (ID_Pessoa_Fisica) VALUES
 (1), (2), (3), (4), (5);
 
 INSERT INTO Fabricante (ID_Pessoa_Juridica, ID_Pais_Origem) VALUES
-(6, 1),
-(7, 2),
-(8, 3),
-(9, 4), 
-(10, 5);
+(6, 1), (7, 2), (8, 3), (9, 4), (10, 5);
+
+INSERT INTO Doenca (Nome) VALUES
+('COVID-19'), ('Gripe'), ('Febre Amarela'), ('Sarampo'), ('HPV');
 
 INSERT INTO Vacina (Nome, Doses, ID_Fabricante) VALUES
 ('SambaVax', 2, 6),
@@ -94,45 +94,45 @@ INSERT INTO Vacina (Nome, Doses, ID_Fabricante) VALUES
 ('GuaraniGuard', 2, 9),
 ('CelesteShield', 2, 10);
 
-INSERT INTO Doenca (Nome) VALUES
-('COVID-19'), ('Gripe'), ('Febre Amarela'), ('Sarampo'), ('HPV');
-
 INSERT INTO Protege_Contra (ID_Vacina, ID_Doenca) VALUES
 (1,1), (2,2), (3,3), (4,4), (5,5);
 
-INSERT INTO Lote (Codigo, Data_Fabricacao, Data_Validade, ID_Vacina) VALUES
-('L001', '2023-01-01', '2025-01-01', 1),
-('L002', '2023-02-01', '2025-02-01', 2),
-('L003', '2023-03-01', '2025-03-01', 3),
-('L004', '2023-04-01', '2025-04-01', 4),
-('L005', '2023-05-01', '2025-05-01', 5);
+INSERT INTO Lote (Codigo, Data_Fabricacao, Data_Validade, ID_Vacina, Quantidade) VALUES
+('L001', '2021-01-01', '2023-01-01', 1, 100), -- Vencido
+('L002', '2022-02-01', '2024-02-01', 2, 64),  -- Vencido
+('L003', '2023-03-01', '2025-03-01', 3, 98),  -- Vencido
+('L004', '2024-04-01', '2026-04-01', 4, 42),
+('L005', '2025-05-01', '2027-05-01', 5, 70);
 
 INSERT INTO Unidade_Saude (ID_Pessoa_Juridica, ID_Endereco) VALUES
 (1,1), (2,2), (3,3), (4,4), (5,5);
 
 INSERT INTO Aplicacao (Data_Aplicacao, Dose, ID_Pessoa_Fisica, ID_Vacinador, ID_Unidade, ID_Lote) VALUES
--- Paciente 1: João Silva (todas as 5 vacinas)
-('2024-01-01', '1ª Dose', 1, 1, 1, 1), -- Vacina A
-('2024-02-01', '1ª Dose', 1, 2, 2, 2), -- Vacina B
-('2024-03-01', 'Única',   1, 3, 3, 3), -- Vacina C
-('2024-04-01', '1ª Dose', 1, 4, 4, 4), -- Vacina D
-('2024-05-01', '1ª Dose', 1, 5, 5, 5), -- Vacina E
+-- Paciente 1: Enzo Sampaio (todas as 5 vacinas)
+('2022-01-01', '1ª Dose', 1, 1, 1, 1),
+('2023-02-01', '1ª Dose', 1, 2, 2, 2),
+('2023-03-01', 'Única',   1, 3, 3, 3),
+('2024-04-01', '1ª Dose', 1, 4, 4, 4),
+('2025-05-01', '1ª Dose', 1, 5, 5, 5),
 
--- Paciente 2: Maria Souza (todas as 5 vacinas)
-('2024-01-02', '1ª Dose', 2, 1, 1, 1), -- Vacina A
-('2024-02-02', '1ª Dose', 2, 2, 2, 2), -- Vacina B
-('2024-03-02', 'Única',   2, 3, 3, 3), -- Vacina C
-('2024-04-02', '1ª Dose', 2, 4, 4, 4), -- Vacina D
-('2024-05-02', '1ª Dose', 2, 5, 5, 5), -- Vacina E
+-- Paciente 2: Jeson ChenWen (todas as 5 vacinas)
+('2022-01-02', '1ª Dose', 2, 1, 1, 1),
+('2023-02-02', '1ª Dose', 2, 2, 2, 2),
+('2023-03-02', 'Única',   2, 3, 3, 3),
+('2024-04-02', '1ª Dose', 2, 4, 4, 4),
+('2025-05-02', '1ª Dose', 2, 5, 5, 5),
 
--- Paciente 3: Pedro Lima (1 vacina)
-('2024-03-03', 'Única',   3, 3, 3, 3), -- Vacina C
+-- Paciente 3: Nilce Moretto (1 vacina)
+('2025-03-03', 'Única',   3, 3, 3, 3),
 
--- Paciente 4: Ana Torres (3 vacinas)
-('2024-01-04', '1ª Dose', 4, 1, 1, 1), -- Vacina A
-('2024-02-04', '1ª Dose', 4, 2, 2, 2), -- Vacina B
-('2024-05-04', '1ª Dose', 4, 5, 5, 5); -- Vacina E
--- Paciente 5 (Carlos Dias) não tem aplicações.
+-- Paciente 4: Davi Brito (3 vacinas)
+('2022-01-04', '1ª Dose', 4, 1, 1, 1),
+('2023-02-04', '1ª Dose', 4, 2, 2, 2),
+('2025-05-04', '1ª Dose', 4, 5, 5, 5),
+
+-- Paciente 5: Juliette (1 vacina vencida)
+-- Este caso será pego pela Stored Procedure da Atividade 7
+('2024-06-20', 'Dose Vencida', 5, 1, 1, 1); -- Lote 1 venceu em 2023
 
 INSERT INTO Vacinador_Unidade (ID_Vacinador, ID_Unidade) VALUES
 (1,1), (2,2), (3,3), (4,4), (5,5);
